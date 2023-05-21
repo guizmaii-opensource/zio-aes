@@ -1,0 +1,12 @@
+name: Release
+
+# Triggered when a draft released is "published" (not a draft anymore)
+on:
+  release:
+    types: [ published ]
+
+env:
+  SBT_TPOLECAT_RELEASE: true # See https://github.com/typelevel/sbt-tpolecat#release-mode
+
+jobs: # TODO JULES
+  run: env
