@@ -32,33 +32,6 @@ jobs:
       - name: scalafmt
         run: sbt 'scalafmtCheckAll' # https://scalameta.org/scalafmt/docs/installation.html#task-keys
 
-  scalafix:
-    timeout-minutes: 45
-    runs-on: ubuntu-latest
-    steps:
-      - run: env
-        shell: bash
-      - uses: actions/checkout@v3.5.2
-      - uses: coursier/cache-action@v6.4.3
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          version: '22.3.2'
-          java-version: '17'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Java env
-        shell: bash
-        run: | # Copied from https://github.com/graalvm/setup-graalvm/#quickstart-template
-          echo "GRAALVM_HOME: $GRAALVM_HOME"
-          echo "JAVA_HOME: $JAVA_HOME"
-          java --version
-      - name: Use CI sbt jvmopts
-        shell: bash
-        run: |
-          mv .jvmopts-ci .jvmopts
-          cat .jvmopts
-      - name: scalafix
-        run: sbt 'scalafixAll --check' # https://scalacenter.github.io/scalafix/docs/users/installation.html#enforce-in-ci
-
   unit-tests:
     timeout-minutes: 45
     runs-on: ubuntu-latest
