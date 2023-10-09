@@ -1,19 +1,23 @@
 package zio.aes
 
-import zio.aes.AES.{ClearText, Password, UTF_8}
+import zio.Config.Secret
+import zio.Scope
+import zio.aes.AES.{ClearText, UTF_8}
 import zio.test.*
 import zio.test.Assertion.*
 import zio.test.TestAspect.*
-import zio.{Scope, ZIO}
 
 //noinspection SimplifyAssertInspection
 object AESSpec extends ZIOSpecDefault {
 
-  private val anyPassword: Gen[Any, Password] =
+  private val anyPassword: Gen[Any, Secret] =
     for {
-      size     <- Gen.int(40, 200) // if the max value here is too high, tests will take forever.
+      size     <- Gen.int(40, 100) // if the max value here is too high, tests will take forever.
       password <- Gen.listOfN(size)(Gen.alphaChar)
-    } yield Password.unsafe(password.mkString)
+    } yield Secret(password.mkString)
+
+  // lazy bastard 😄
+  implicit private def secretToArrayChar(secret: Secret): Array[Char] = secret.value.toArray
 
   private val encryptSpec =
     suite("::encrypt")(
