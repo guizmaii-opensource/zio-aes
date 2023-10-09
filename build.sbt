@@ -43,7 +43,7 @@ lazy val root =
     .settings(
       name               := "zio-AES",
       publish / skip     := true,
-      //crossScalaVersions := Nil,// https://www.scala-sbt.org/1.x/docs/Cross-Build.html#Cross+building+a+project+statefully
+      crossScalaVersions := Nil,// https://www.scala-sbt.org/1.x/docs/Cross-Build.html#Cross+building+a+project+statefully
     )
     .aggregate(
       `zio-AES`
@@ -51,7 +51,7 @@ lazy val root =
 
 lazy val `zio-AES` =
   project
-    .in(file("zio-AES"))
+    .in(file("zio-aes"))
     .settings(stdSettings(Some("zio-AES")))
     .settings(addOptionsOn("2.13")("-Xsource:3"))
     .settings(addOptionsOn("2.12")("-Xsource:3"))
