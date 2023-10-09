@@ -1,8 +1,8 @@
 package zio.aes
 
-import zio.{ULayer, ZLayer}
-import zio.prelude.Assertion.{greaterThanOrEqualTo, hasLength, matches, notEqualTo}
+import zio.Config.Secret
 import zio.prelude.Subtype
+import zio.{ULayer, ZLayer}
 
 import java.nio.charset.{Charset, StandardCharsets}
 import java.security.{Key, SecureRandom}
@@ -12,31 +12,12 @@ import scala.language.implicitConversions
 
 object AES {
 
-  def live(password: Password): ULayer[AES] = ZLayer.succeed(new AESLive(password))
-
-  /**
-   * This type represents a password.
-   *
-   * The constraints on that password are fairly simple but can be improved later if needed.
-   *
-   * For now, a valid password is just a string which is at least 40 characters long.
-   *
-   * Why 40? It seems long enough.
-   */
-  object Password extends Subtype[String] {
-    private[zio] def unsafe(s: String): Type = Password.wrap(s)
-
-    /**
-     * `\\S` means "Match nonwhitespace" (could probably be improved)
-     *
-     * Comes from
-     * - https://www.tutorialspoint.com/scala/scala_regular_expressions.htm
-     * - https://stackoverflow.com/questions/3085539/regular-expression-for-anything-but-an-empty-string
-     */
-    // noinspection TypeAnnotation
-    inline override def assertion = matches("^\\S+$".r) && hasLength(greaterThanOrEqualTo(40))
-  }
-  type Password = Password.Type
+  def live(password: Secret): ULayer[AES] =
+    ZLayer.succeed {
+      // We call `.value.toArray` and pass its result to the live class instead of passing the `Secret` directly
+      // to avoid having to instantiate a Chunk and a Array[Char] every time we need to use the password
+      new AESLive(password.value.toArray)
+    }
 
   final val UTF_8: Charset = StandardCharsets.UTF_8
 
@@ -69,7 +50,7 @@ object AES {
   def base64Encode(in: Array[Byte]): Base64String = Base64String(new String(java.util.Base64.getEncoder.encode(in), UTF_8))
   def base64Decode(in: Base64String): Array[Byte] = java.util.Base64.getDecoder.decode(in.getBytes(UTF_8))
 }
-import zio.aes.AES._
+import zio.aes.AES.*
 
 /**
  * Resources that helped:
@@ -85,7 +66,7 @@ trait AES {
   def decrypt(data: CipherText, salt: Salt, iv: IV): ClearText
 }
 
-final class AESLive(password: Password) extends AES {
+final class AESLive(password: Array[Char]) extends AES {
 
   private val cipher                     = "AES/GCM/NoPadding"
   private val Algorithm                  = "AES"
@@ -145,7 +126,7 @@ final class AESLive(password: Password) extends AES {
     val factory        = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
     val iterationCount = 65536
     val keyLength      = 256
-    val spec           = new PBEKeySpec(password.toCharArray, salt, iterationCount, keyLength)
+    val spec           = new PBEKeySpec(password, salt, iterationCount, keyLength)
     new SecretKeySpec(factory.generateSecret(spec).getEncoded, Algorithm)
   }
 
