@@ -1,5 +1,7 @@
 import scala.collection.immutable.Seq
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 enablePlugins(
   ZioSbtEcosystemPlugin,
   ZioSbtCiPlugin,
