@@ -67,7 +67,7 @@ lazy val `zio-AES` =
 
 lazy val docs =
   project
-    .in(file("zio-AES-docs"))
+    .in(file("zio-aes-docs"))
     .settings(
       moduleName                                 := "zio-AES-docs",
       scalacOptions -= "-Yno-imports",
