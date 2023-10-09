@@ -34,7 +34,7 @@ object AES {
      * - https://stackoverflow.com/questions/3085539/regular-expression-for-anything-but-an-empty-string
      */
     // noinspection TypeAnnotation
-    override inline def assertion = matches("^\\S+$".r) && hasLength(greaterThanOrEqualTo(40))
+    inline override def assertion = matches("^\\S+$".r) && hasLength(greaterThanOrEqualTo(40))
   }
   type Password = Password.Type
 
