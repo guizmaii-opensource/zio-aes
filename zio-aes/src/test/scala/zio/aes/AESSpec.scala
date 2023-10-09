@@ -17,7 +17,7 @@ object AESSpec extends ZIOSpecDefault {
     } yield Secret(password.mkString)
 
   // lazy bastard 😄
-  private implicit def secretToArrayChar(secret: Secret): Array[Char] = secret.value.toArray
+  implicit private def secretToArrayChar(secret: Secret): Array[Char] = secret.value.toArray
 
   private val encryptSpec =
     suite("::encrypt")(

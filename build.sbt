@@ -13,9 +13,9 @@ inThisBuild(
     organization      := "com.guizmaii",
     homepage          := Some(url("https://github.com/guizmaii-opensource/zio-AES")),
     zioVersion        := "2.0.18",
+    scala212          := "2.12.18",
     scala213          := "2.13.12",
     scala3            := "3.3.1",
-    crossScalaVersions -= scala212.value,
     ciEnabledBranches := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
@@ -54,6 +54,7 @@ lazy val `zio-AES` =
     .in(file("zio-AES"))
     .settings(stdSettings(Some("zio-AES")))
     .settings(addOptionsOn("2.13")("-Xsource:3"))
+    .settings(addOptionsOn("2.12")("-Xsource:3"))
     .settings(
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion.value,
