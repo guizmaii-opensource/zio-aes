@@ -16,7 +16,6 @@ inThisBuild(
     scala213                 := "2.13.12",
     scala3                   := "3.3.1",
     crossScalaVersions -= scala212.value,
-    scalaVersion             := scala3.value,
     ciEnabledBranches        := Seq("main"),
     ciPostReleaseJobs        := Seq.empty,
     Test / parallelExecution := false,

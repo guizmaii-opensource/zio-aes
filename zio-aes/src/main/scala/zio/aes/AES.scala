@@ -8,7 +8,6 @@ import java.nio.charset.{Charset, StandardCharsets}
 import java.security.{Key, SecureRandom}
 import javax.crypto.spec.{GCMParameterSpec, PBEKeySpec, SecretKeySpec}
 import javax.crypto.{Cipher, SecretKey, SecretKeyFactory}
-import scala.language.implicitConversions
 
 object AES {
 
@@ -24,13 +23,13 @@ object AES {
   object Base64String extends Subtype[String]
   type Base64String = Base64String.Type
 
-  object CipherText extends Subtype[Base64String]
+  object CipherText extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
   type CipherText = CipherText.Type
 
-  object IV extends Subtype[Base64String]
+  object IV extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
   type IV = IV.Type
 
-  object Salt extends Subtype[Base64String] {
+  object Salt extends Subtype[String] { // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
     implicit final class RichSalt(private val salt: Salt) extends AnyVal {
       def toRawSalt: RawSalt = RawSalt(base64Decode(salt))
     }
@@ -49,6 +48,11 @@ object AES {
 
   def base64Encode(in: Array[Byte]): Base64String = Base64String(new String(java.util.Base64.getEncoder.encode(in), UTF_8))
   def base64Decode(in: Base64String): Array[Byte] = java.util.Base64.getDecoder.decode(in.getBytes(UTF_8))
+
+  // TODO: Delete these implicit conversions once https://github.com/zio/zio-prelude/issues/1183 is fixed
+  @inline implicit private[aes] def saltToBase64String(salt: Salt): Base64String                   = Base64String(salt)
+  @inline implicit private[aes] def ivToBase64String(iv: IV): Base64String                         = Base64String(iv)
+  @inline implicit private[aes] def cipherTextToBase64String(cipherText: CipherText): Base64String = Base64String(cipherText)
 }
 import zio.aes.AES.*
 
