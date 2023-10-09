@@ -9,25 +9,22 @@ enablePlugins(
 
 inThisBuild(
   List(
-    name                     := "zio-AES",
-    organization             := "com.guizmaii",
-    homepage                 := Some(url("https://github.com/guizmaii-opensource/zio-AES")),
-    zioVersion               := "2.0.18",
-    scala213                 := "2.13.12",
-    scala3                   := "3.3.1",
+    name              := "zio-AES",
+    organization      := "com.guizmaii",
+    homepage          := Some(url("https://github.com/guizmaii-opensource/zio-AES")),
+    zioVersion        := "2.0.18",
+    scala213          := "2.13.12",
+    scala3            := "3.3.1",
     crossScalaVersions -= scala212.value,
-    ciEnabledBranches        := Seq("main"),
-    ciPostReleaseJobs        := Seq.empty,
-    Test / parallelExecution := false,
-    Test / fork              := true,
-    run / fork               := true,
+    ciEnabledBranches := Seq("main"),
+    ciPostReleaseJobs := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
     scalafixDependencies ++= List(
       "com.github.vovapolu"                      %% "scaluzzi" % "0.1.23",
       "io.github.ghostbuster91.scalafix-unified" %% "unified"  % "0.0.9",
     ),
-    licenses                 := Seq(License.Apache2),
-    developers               := List(
+    licenses          := Seq(License.Apache2),
+    developers        := List(
       Developer(
         "guizmaii",
         "Jules Ivanic",
