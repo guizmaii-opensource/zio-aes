@@ -55,7 +55,7 @@ lazy val root =
 lazy val `zio-AES` =
   project
     .in(file("zio-AES"))
-    .settings(stdSettings(Some("zio-AES"), enableScalafix = false))
+    .settings(stdSettings(Some("zio-AES")))
     .settings(addOptionsOn("2.13")("-Xsource:3"))
     .settings(
       libraryDependencies ++= Seq(
