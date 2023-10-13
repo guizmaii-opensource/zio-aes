@@ -2,7 +2,7 @@ package zio.aes
 
 import zio.Config.Secret
 import zio.Scope
-import zio.aes.AES.{ClearText, UTF_8}
+import zio.aes.AES.UTF_8
 import zio.test.*
 import zio.test.Assertion.*
 import zio.test.TestAspect.*
@@ -24,7 +24,7 @@ object AESSpec extends ZIOSpecDefault {
       test("encrypted text is not just base64'ed text") {
         check(anyPassword, Gen.string) { (password, secret) =>
           val service: AES      = new AESLive(password)
-          val (encrypted, _, _) = service.encrypt(ClearText(secret))
+          val (encrypted, _, _) = service.encrypt(secret)
 
           assert(new String(AES.base64Decode(encrypted), UTF_8))(not(equalTo(secret)))
         }
@@ -32,7 +32,7 @@ object AESSpec extends ZIOSpecDefault {
       test("salt should be 16 bytes long") {
         check(anyPassword, Gen.string) { (password, secret) =>
           val service: AES = new AESLive(password)
-          val (_, salt, _) = service.encrypt(ClearText(secret))
+          val (_, salt, _) = service.encrypt(secret)
 
           assert(AES.base64Decode(salt).length)(equalTo(16))
         }
@@ -40,7 +40,7 @@ object AESSpec extends ZIOSpecDefault {
       test("iv should be 12 bytes long") {
         check(anyPassword, Gen.string) { (password, secret) =>
           val service: AES = new AESLive(password)
-          val (_, _, iv)   = service.encrypt(ClearText(secret))
+          val (_, _, iv)   = service.encrypt(secret)
 
           assert(AES.base64Decode(iv).length)(equalTo(12))
         }
@@ -52,7 +52,7 @@ object AESSpec extends ZIOSpecDefault {
       test("decrypted encrypted text should be equal to initial text") {
         check(anyPassword, Gen.string) { (password, secret) =>
           val service: AES          = new AESLive(password)
-          val (encrypted, salt, iv) = service.encrypt(ClearText(secret))
+          val (encrypted, salt, iv) = service.encrypt(secret)
           val decrypted             = service.decrypt(encrypted, salt, iv)
 
           assert(decrypted)(equalTo(secret))
