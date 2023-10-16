@@ -20,31 +20,28 @@ object AES {
 
   final val UTF_8: Charset = StandardCharsets.UTF_8
 
-  object Base64String extends Subtype[String]
   type Base64String = Base64String.Type
+  object Base64String extends Subtype[String]
 
-  object CipherText extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
   type CipherText = CipherText.Type
+  object CipherText extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
 
-  object IV extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
   type IV = IV.Type
+  object IV extends Subtype[String] // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
 
+  type Salt = Salt.Type
   object Salt extends Subtype[String] { // should be Subtype[Base64String] but https://github.com/zio/zio-prelude/issues/1183
     implicit final class RichSalt(private val salt: Salt) extends AnyVal {
       def toRawSalt: RawSalt = RawSalt(base64Decode(salt))
     }
   }
-  type Salt = Salt.Type
 
+  type RawSalt = RawSalt.Type
   object RawSalt extends Subtype[Array[Byte]] {
     implicit final class RichRawSalt(private val salt: RawSalt) extends AnyVal {
       def toSalt: Salt = Salt(base64Encode(salt))
     }
   }
-  type RawSalt = RawSalt.Type
-
-  object ClearText extends Subtype[String]
-  type ClearText = ClearText.Type
 
   def base64Encode(in: Array[Byte]): Base64String = Base64String(new String(java.util.Base64.getEncoder.encode(in), UTF_8))
   def base64Decode(in: Base64String): Array[Byte] = java.util.Base64.getDecoder.decode(in.getBytes(UTF_8))
@@ -65,9 +62,8 @@ import zio.aes.AES.*
  *   - https://stackoverflow.com/a/13915596
  */
 trait AES {
-  def encrypt(in: ClearText): (CipherText, Salt, IV)
-
-  def decrypt(data: CipherText, salt: Salt, iv: IV): ClearText
+  def encrypt(in: String): (CipherText, Salt, IV)
+  def decrypt(data: CipherText, salt: Salt, iv: IV): String
 }
 
 final class AESLive(password: Array[Char]) extends AES {
@@ -80,7 +76,7 @@ final class AESLive(password: Array[Char]) extends AES {
 
   private val random: SecureRandom = new SecureRandom()
 
-  override def encrypt(in: ClearText): (CipherText, Salt, IV) = {
+  override def encrypt(in: String): (CipherText, Salt, IV) = {
     val rawSalt: RawSalt        = generateRawSalt
     val key: Key                = getAESKeyFromPassword(rawSalt)
     val iv: GCMParameterSpec    = generateIv
@@ -89,12 +85,12 @@ final class AESLive(password: Array[Char]) extends AES {
     (CipherText(base64Encode(cipherText)), rawSalt.toSalt, IV(base64Encode(iv.getIV)))
   }
 
-  override def decrypt(data: CipherText, salt: Salt, iv: IV): ClearText = {
+  override def decrypt(data: CipherText, salt: Salt, iv: IV): String = {
     val key: Key                    = getAESKeyFromPassword(salt.toRawSalt)
     val gcmParams: GCMParameterSpec = new GCMParameterSpec(GcmAuthenticationTagLength, base64Decode(iv))
     val clearText: Array[Byte]      = doDecrypt(base64Decode(data), key, gcmParams)
 
-    ClearText(new String(clearText, UTF_8))
+    new String(clearText, UTF_8)
   }
 
   private def doEncrypt(in: Array[Byte], key: Key, gcmParams: GCMParameterSpec): Array[Byte] = {
