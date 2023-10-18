@@ -2,9 +2,9 @@
 [//]: # (So please do not edit it manually. Instead, change "docs/index.md" file or sbt setting keys)
 [//]: # (e.g. "readmeDocumentation" and "readmeSupport".)
 
-# zio-AES
+# zio-aes
 
-[![Production Ready](https://img.shields.io/badge/Project%20Stage-Production%20Ready-brightgreen.svg)](https://github.com/zio/zio/wiki/Project-Stages) ![CI Badge](https://github.com/zio/zio-AES/workflows/CI/badge.svg) [![Sonatype Snapshots](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.guizmaii/zio-aes_3.svg?label=Sonatype%20Snapshot)](https://oss.sonatype.org/content/repositories/snapshots/com/guizmaii/zio-aes_3/) [![zio-AES](https://img.shields.io/github/stars/zio/zio-AES?style=social)](https://github.com/zio/zio-AES)
+[![Production Ready](https://img.shields.io/badge/Project%20Stage-Production%20Ready-brightgreen.svg)](https://github.com/zio/zio/wiki/Project-Stages) ![CI Badge](https://github.com/zio/zio-AES/workflows/CI/badge.svg) [![Sonatype Releases](https://img.shields.io/nexus/r/https/oss.sonatype.org/com.guizmaii/zio-aes_2.13.svg?label=Sonatype%20Release)](https://oss.sonatype.org/content/repositories/releases/com/guizmaii/zio-aes_2.13/) [![Sonatype Snapshots](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.guizmaii/zio-aes_2.13.svg?label=Sonatype%20Snapshot)](https://oss.sonatype.org/content/repositories/snapshots/com/guizmaii/zio-aes_2.13/) [![javadoc](https://javadoc.io/badge2/com.guizmaii/zio-aes-docs_2.13/javadoc.svg)](https://javadoc.io/doc/com.guizmaii/zio-aes-docs_2.13) [![zio-aes](https://img.shields.io/github/stars/zio/zio-AES?style=social)](https://github.com/zio/zio-AES)
 
 ## Introduction
 
@@ -17,12 +17,12 @@ ZIO implementation of https://gist.github.com/guizmaii/6b5d3666081960639c3df0a24
 In order to use this library, we need to add the following line in our `build.sbt` file:
 
 ```scala
-libraryDependencies += "com.guizmaii" %% "zio-AES" % "<version>"
+libraryDependencies += "com.guizmaii" %% "zio-aes" % "<version>"
 ```
 
 ## Documentation
 
-Learn more on the [zio-AES homepage](https://github.com/guizmaii-opensource/zio-AES)!
+Learn more on the [zio-aes homepage](https://github.com/guizmaii-opensource/zio-aes)!
 
 ## Contributing
 
@@ -43,4 +43,4 @@ Come chat with us on [![Badge-Discord]][Link-Discord].
 
 [License](LICENSE)
 
-Copyright 2023-2023 Jules Ivanic and the zio-AES contributors.
+Copyright 2023-2023 Jules Ivanic and the zio-aes contributors.

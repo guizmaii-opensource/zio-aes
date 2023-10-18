@@ -9,9 +9,9 @@ enablePlugins(
 
 inThisBuild(
   List(
-    name              := "zio-AES",
+    name              := "zio-aes",
     organization      := "com.guizmaii",
-    homepage          := Some(url("https://github.com/guizmaii-opensource/zio-AES")),
+    homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
     zioVersion        := "2.0.18",
     scala212          := "2.12.18",
     scala213          := "2.13.12",
@@ -41,18 +41,18 @@ lazy val root =
   project
     .in(file("."))
     .settings(
-      name               := "zio-AES",
+      name               := "zio-aes",
       publish / skip     := true,
       crossScalaVersions := Nil,// https://www.scala-sbt.org/1.x/docs/Cross-Build.html#Cross+building+a+project+statefully
     )
     .aggregate(
-      `zio-AES`
+      `zio-aes`
     )
 
-lazy val `zio-AES` =
+lazy val `zio-aes` =
   project
     .in(file("zio-aes"))
-    .settings(stdSettings(Some("zio-AES")))
+    .settings(stdSettings(Some("zio-aes")))
     .settings(addOptionsOn("2.13")("-Xsource:3"))
     .settings(addOptionsOn("2.12")("-Xsource:3"))
     .settings(
@@ -69,14 +69,14 @@ lazy val docs =
   project
     .in(file("zio-aes-docs"))
     .settings(
-      moduleName                                 := "zio-AES-docs",
+      moduleName                                 := "zio-aes-docs",
       scalacOptions -= "-Yno-imports",
       scalacOptions -= "-Xfatal-warnings",
-      projectName                                := "zio-AES",
-      mainModuleName                             := (`zio-AES` / moduleName).value,
+      projectName                                := "zio-aes",
+      mainModuleName                             := (`zio-aes` / moduleName).value,
       projectStage                               := ProjectStage.ProductionReady,
-      ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(`zio-AES`),
-      readmeLicense += s"\n\nCopyright 2023-${java.time.Year.now()} Jules Ivanic and the zio-AES contributors.",
+      ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(`zio-aes`),
+      readmeLicense += s"\n\nCopyright 2023-${java.time.Year.now()} Jules Ivanic and the zio-aes contributors.",
     )
     .enablePlugins(WebsitePlugin)
-    .dependsOn(`zio-AES`)
+    .dependsOn(`zio-aes`)
