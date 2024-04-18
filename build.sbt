@@ -15,7 +15,7 @@ inThisBuild(
     zioVersion        := "2.0.21",
     scala212          := "2.12.18",
     scala213          := "2.13.12",
-    scala3            := "3.3.1",
+    scala3            := "3.3.3",
     ciEnabledBranches := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
