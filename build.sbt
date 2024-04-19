@@ -14,7 +14,7 @@ inThisBuild(
     homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
     zioVersion        := "2.0.21",
     scala212          := "2.12.19",
-    scala213          := "2.13.12",
+    scala213          := "2.13.13",
     scala3            := "3.3.3",
     ciEnabledBranches := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
