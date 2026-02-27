@@ -13,7 +13,7 @@ inThisBuild(
     organization      := "com.guizmaii",
     homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
     zioVersion        := "2.1.23",
-    scala212          := "2.12.20",
+    scala212          := "2.12.21",
     scala213          := "2.13.17",
     scala3            := "3.3.7",
     ciEnabledBranches := Seq("main"),
