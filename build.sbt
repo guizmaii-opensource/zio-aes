@@ -19,6 +19,7 @@ inThisBuild(
     ciTargetJavaVersions   := Seq("17", "21", "25"),
     semanticdbEnabled      := true,
     semanticdbVersion      := scalafixSemanticdb.revision,
+    scalacOptions         += "-Xsemanticdb",
     ciEnabledBranches      := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
