@@ -12,11 +12,12 @@ inThisBuild(
     name              := "zio-aes",
     organization      := "com.guizmaii",
     homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
-    zioVersion        := "2.1.24",
-    scala212          := "2.12.20",
-    scala213          := "2.13.18",
-    scala3            := "3.3.7",
-    ciEnabledBranches := Seq("main"),
+    zioVersion             := "2.1.24",
+    scala3                 := "3.3.7",
+    crossScalaVersions     := Seq(scala3.value),
+    scalaVersion           := scala3.value,
+    ciTargetJavaVersions   := Seq("17", "21", "25"),
+    ciEnabledBranches      := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
     scalafixDependencies ++= List(
@@ -53,9 +54,8 @@ lazy val `zio-aes` =
   project
     .in(file("zio-aes"))
     .settings(stdSettings(Some("zio-aes")))
-    .settings(addOptionsOn("2.13")("-Xsource:3"))
-    .settings(addOptionsOn("2.12")("-Xsource:3"))
     .settings(
+      scalacOptions ++= Seq("-language:noAutoTupling"), // See https://github.com/scala/scala3/discussions/19255
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion.value,
         "dev.zio" %% "zio-prelude"  % "1.0.0-RC46",
