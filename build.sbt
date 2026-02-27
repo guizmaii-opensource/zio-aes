@@ -14,7 +14,7 @@ inThisBuild(
     homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
     zioVersion        := "2.1.24",
     scala212          := "2.12.20",
-    scala213          := "2.13.17",
+    scala213          := "2.13.18",
     scala3            := "3.3.7",
     ciEnabledBranches := Seq("main"),
     ciPostReleaseJobs := Seq.empty,
@@ -58,7 +58,7 @@ lazy val `zio-aes` =
     .settings(
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion.value,
-        "dev.zio" %% "zio-prelude"  % "1.0.0-RC44",
+        "dev.zio" %% "zio-prelude"  % "1.0.0-RC45",
         "dev.zio" %% "zio-test"     % zioVersion.value % Test,
         "dev.zio" %% "zio-test-sbt" % zioVersion.value % Test,
       ),
