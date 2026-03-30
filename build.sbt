@@ -9,26 +9,26 @@ enablePlugins(
 
 inThisBuild(
   List(
-    name              := "zio-aes",
-    organization      := "com.guizmaii",
-    homepage          := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
-    zioVersion             := "2.1.24",
-    scala3                 := "3.3.7",
-    crossScalaVersions     := Seq(scala3.value),
-    scalaVersion           := scala3.value,
-    ciTargetJavaVersions   := Seq("17", "21", "25"),
-    semanticdbEnabled      := true,
-    semanticdbVersion      := scalafixSemanticdb.revision,
-    scalacOptions         += "-Xsemanticdb",
-    ciEnabledBranches      := Seq("main"),
-    ciPostReleaseJobs := Seq.empty,
+    name                 := "zio-aes",
+    organization         := "com.guizmaii",
+    homepage             := Some(url("https://github.com/guizmaii-opensource/zio-aes")),
+    zioVersion           := "2.1.24",
+    scala3               := "3.3.7",
+    crossScalaVersions   := Seq(scala3.value),
+    scalaVersion         := scala3.value,
+    ciTargetJavaVersions := Seq("17", "21", "25"),
+    semanticdbEnabled    := true,
+    semanticdbVersion    := scalafixSemanticdb.revision,
+    scalacOptions += "-Xsemanticdb",
+    ciEnabledBranches    := Seq("main"),
+    ciPostReleaseJobs    := Seq.empty,
     ciJvmOptions ++= Seq("-Xms6G", "-Xmx6G", "-Xss4M", "-XX:+UseG1GC"),
     scalafixDependencies ++= List(
       "com.github.vovapolu"                      %% "scaluzzi" % "0.1.23",
       "io.github.ghostbuster91.scalafix-unified" %% "unified"  % "0.0.9",
     ),
-    licenses          := Seq(License.Apache2),
-    developers        := List(
+    licenses             := Seq(License.Apache2),
+    developers           := List(
       Developer(
         "guizmaii",
         "Jules Ivanic",
@@ -61,7 +61,7 @@ lazy val `zio-aes` =
       scalacOptions ++= Seq("-language:noAutoTupling"), // See https://github.com/scala/scala3/discussions/19255
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion.value,
-        "dev.zio" %% "zio-prelude"  % "1.0.0-RC46",
+        "dev.zio" %% "zio-prelude"  % "1.0.0-RC47",
         "dev.zio" %% "zio-test"     % zioVersion.value % Test,
         "dev.zio" %% "zio-test-sbt" % zioVersion.value % Test,
       ),
