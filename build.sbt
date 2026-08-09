@@ -61,7 +61,7 @@ lazy val `zio-aes` =
       scalacOptions ++= Seq("-language:noAutoTupling"), // See https://github.com/scala/scala3/discussions/19255
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion.value,
-        "dev.zio" %% "zio-prelude"  % "1.0.0-RC47",
+        "dev.zio" %% "zio-prelude"  % "1.0.0-RC48",
         "dev.zio" %% "zio-test"     % zioVersion.value % Test,
         "dev.zio" %% "zio-test-sbt" % zioVersion.value % Test,
       ),
