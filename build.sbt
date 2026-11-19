@@ -44,7 +44,7 @@ lazy val `zio-aes` =
       name := "zio-aes",
       libraryDependencies ++= Seq(
         "dev.zio" %% "zio"          % zioVersion,
-        "dev.zio" %% "zio-prelude"  % "1.0.0-RC48",
+        "dev.zio" %% "zio-prelude"  % "1.0.0-RC49",
         "dev.zio" %% "zio-test"     % zioVersion % Test,
         "dev.zio" %% "zio-test-sbt" % zioVersion % Test,
       ),
